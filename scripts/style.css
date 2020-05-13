@@ -1,0 +1,147 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nav-bar {
+    display: flex;
+    height: 12vh;
+    padding: 30px;
+    background-color: rgb(152, 221, 62);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-options {
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.nav-options a{
+    padding: 15px 20px;
+}
+
+#signup{
+    text-align: center;
+    width: 100px;
+    background-color: rgb(171, 252, 160);
+    border-radius: 20%;
+}
+
+.main-body {
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-body h1{
+    font-size: 50px;
+}
+
+.footer {
+    height: 8vh;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(225, 248, 96);
+    padding: 15px;
+}
+
+.login-container {
+    height: 300px;
+    width: 300px;
+    background-color: rgb(202, 228, 177);
+    border: 2px solid rgb(48, 70, 48);
+    border-radius: 10px;
+}
+
+.login-container label, .signup-container label {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+#button {
+    margin-top: 15px;
+    height: 30px;
+    width: 90px;
+    border: 2px rgb(76, 134, 76) solid;
+    border-radius: 5%;
+}
+
+.login-c {
+   height: 30px;
+   width: 250px; 
+   margin-bottom: 15px;
+   border-radius: 5px;
+   border: none;
+}
+
+.login-b {
+
+    height: 30px;
+    width: 120px; 
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+ }
+
+.signup-container {
+    height: 400px;
+    width: 400px;
+    background-color: rgb(202, 228, 177);
+    border: 2px solid rgb(48, 70, 48);
+    border-radius: 10px;
+}
+
+.remember {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 250px;
+}
+
+.remember2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.to-do-container {
+    height: 400px;
+    width: 400px;
+    background-color: rgb(202, 228, 177);
+    border: 2px solid rgb(48, 70, 48);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+}
+
+.to-do-container h2 {
+    margin-top: 20px;
+}
+
+.to-do-list {
+   list-style: none;
+}
