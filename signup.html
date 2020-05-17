@@ -18,21 +18,21 @@
 
     <div class="main-body">
         <div class="signup-container">
-            <form action="" id="signup-form">
+            <form action="/process-signup" id="signup-form" method="POST">
                 <label for="">Create an account...</label>
                 <div class="remember">
-                    <input type="text" name="" class="login-b" id="" placeholder="First Name">
-                    <input type="text" name="" class="login-b" id="" placeholder="Last Name">
+                    <input type="text" name="firstname" class="login-b" id="" placeholder="First Name">
+                    <input type="text" name="lastname" class="login-b" id="" placeholder="Last Name">
                 </div>
-                <input type="text" class="login-c" name="" id="" placeholder="E-mail">
-                <input type="text" class="login-c" name="" id="" placeholder="Phone no">
+                <input type="text" class="login-c" name="email" id="" placeholder="E-mail">
+                <input type="text" class="login-c" name="phone" id="" placeholder="Phone no">
 
-                <input type="password" class="login-c" name="" id="" placeholder="Password">
+                <input type="password" class="login-c" name="password" id="" placeholder="Password">
                 <input type="password" class="login-c" name="" id="" placeholder="Repeat Password">
                 <div class="remember2">
-                    <input type="checkbox" name="" id=""><span>Remember me?</span>
+                    <input type="checkbox" name="rememberme" id=""><span>Remember me?</span>
                 </div>
-                <input type="button" id="button" value="Create">
+                <button type="submit" id="button">Login</button>
             </form>
         </div>
     </div>
