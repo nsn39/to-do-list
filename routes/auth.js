@@ -1,7 +1,8 @@
 var router = require('express').Router();
 var path = require('path');
 var User = require('../models/User');
-
+var bcrypt = require('bcryptjs');
+var passport = require('passport');
 
 router.get('/login', (req,res)=>{
     res.sendFile(path.join(__dirname, '/../login.html'));
@@ -11,26 +12,33 @@ router.get('/signup', (req,res)=>{
     res.sendFile(path.join(__dirname, '/../signup.html'));
 })
 
-router.get('/dashboard', (req,res)=>{
+router.get('/dashboard',(req,res)=>{
     res.sendFile(path.join(__dirname, '/../dashboard.html'));
 })
 
-router.post('/process-login', async (req,res)=> {
+router.post('/process-login', (req,res,next)=> {
+    /*
     console.log(req.body);
     //console.log(typeof(req.body));
     const savedUser = await User.findOne({email: req.body.email});
     console.log(savedUser);
+    //var salt = bcrypt.genSaltSync(10);
+    //console.log(bcrypt.hashSync(req.body.password), salt);
     if (!savedUser) {
         res.send('No email exists')
     }else {
-        if (req.body.password === savedUser.password) {
+        if (bcrypt.compareSync(req.body.password, savedUser.password)) {
             res.redirect('/dashboard');
         }
         else {
             res.send('Wrong password');
         }   
     }
-
+    */
+   passport.authenticate('local', {
+       failureRedirect: '/login',
+       successRedirect: '/dashboard'
+   })(req, res,next);
 });
 
 router.post('/process-signup', async (req,res)=> {
@@ -43,6 +51,11 @@ router.post('/process-signup', async (req,res)=> {
         email: req.body.email,
         password: req.body.password,
     });
+
+    //Generating a salt and hashing password
+    var salt = bcrypt.genSaltSync(10);
+    user.password = bcrypt.hashSync(user.password, salt);
+
     console.log(user);
     try{
         const savedUser = await user.save();

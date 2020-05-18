@@ -3,9 +3,14 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyparser = require('body-parser');
 const dotenv = require('dotenv');
+const passport = require('passport');
+
+
+require('./config/passport')(passport);
 
 app.use(express.json());
-app.use(bodyparser());
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 //connect to DB
@@ -18,6 +23,10 @@ mongoose.connect(
     //{  },
     () => console.log('Connected to DB!')
 );
+
+//Initializing passwords
+app.use(passport.initialize());
+
 
 //Importing routes
 const userRoutes = require('./routes/auth');
