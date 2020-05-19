@@ -12,8 +12,10 @@ router.get('/signup', (req,res)=>{
     res.sendFile(path.join(__dirname, '/../signup.html'));
 })
 
-router.get('/dashboard',(req,res)=>{
-    res.sendFile(path.join(__dirname, '/../dashboard.html'));
+router.get('/dashboard',ensureAuthenticated, (req,res)=>{
+     return res.render('dashboard', {
+        user: req.user
+    })
 })
 
 router.post('/process-login', (req,res,next)=> {
@@ -64,5 +66,12 @@ router.post('/process-signup', async (req,res)=> {
         res.send('Error');
     }
 });
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
+}
 
 module.exports = router;
