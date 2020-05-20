@@ -67,6 +67,12 @@ router.post('/process-signup', async (req,res)=> {
     }
 });
 
+//Logout feature
+router.get('/logout', (req, res) => {
+    req.logOut();
+    res.sendFile(path.join(__dirname, '/../login.html'));
+});
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
