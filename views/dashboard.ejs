@@ -29,7 +29,13 @@
             
             <div class="to-do-list">
                 <% if (user.tasks.length !== 0) { %>
-                    <%- "List is not empty" %>
+                    <ul>
+                        <% user.tasks.forEach(function(item) { %>
+                            <li>
+                                <%- item %>
+                            </li>
+                        <% }) %>
+                    </ul>
                 <% } else { %>
                     <%- "You have nothing left now.." %>
                 <% } %>

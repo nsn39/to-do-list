@@ -70,16 +70,19 @@ router.post('/add', async (req, res) => {
     const filter = {email: user_email};
     const update = {$addToSet: {tasks: [new_value]}};
     const option = {useFindAndModify: false};
-
-    await User.updateOne(filter, update, option, (err, result) => {
+    
+    await User.updateOne(filter, update, option, async (err, result) => {
         if (err) {
             res.send('Error');
         }else {
-            res.send('success');
+            const savedUser = await User.findOne({email: user_email});
+            //console.log(await User.findOne({email: user_email}));
+            res.render('dashboard', {
+                user: savedUser
+            });
         }
     });
-    console.log(await User.findOne({email: user_email}));
-    res.redirect('/dashboard');
+    
 });
 
 function ensureAuthenticated(req, res, next) {
