@@ -3,6 +3,10 @@ var path = require('path');
 var User = require('../models/User');
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
+var mongoose = require('mongoose');
+
+//I know this is not secure bt this is how I'm saving the logged in user.
+var user_email;
 
 router.get('/login', (req,res)=>{
     res.sendFile(path.join(__dirname, '/../login.html'));
@@ -13,30 +17,13 @@ router.get('/signup', (req,res)=>{
 })
 
 router.get('/dashboard',ensureAuthenticated, (req,res)=>{
+    user_email = req.user.email;
      return res.render('dashboard', {
         user: req.user
     })
 })
 
 router.post('/process-login', (req,res,next)=> {
-    /*
-    console.log(req.body);
-    //console.log(typeof(req.body));
-    const savedUser = await User.findOne({email: req.body.email});
-    console.log(savedUser);
-    //var salt = bcrypt.genSaltSync(10);
-    //console.log(bcrypt.hashSync(req.body.password), salt);
-    if (!savedUser) {
-        res.send('No email exists')
-    }else {
-        if (bcrypt.compareSync(req.body.password, savedUser.password)) {
-            res.redirect('/dashboard');
-        }
-        else {
-            res.send('Wrong password');
-        }   
-    }
-    */
    passport.authenticate('local', {
        failureRedirect: '/login',
        successRedirect: '/dashboard'
@@ -71,6 +58,28 @@ router.post('/process-signup', async (req,res)=> {
 router.get('/logout', (req, res) => {
     req.logOut();
     res.sendFile(path.join(__dirname, '/../login.html'));
+});
+
+//Adding new item to the list
+router.post('/add', async (req, res) => {
+    //console.log(user_email);
+    
+    const new_value = req.body.new_item;
+    //console.log(new_value);
+
+    const filter = {email: user_email};
+    const update = {$addToSet: {tasks: [new_value]}};
+    const option = {useFindAndModify: false};
+
+    await User.updateOne(filter, update, option, (err, result) => {
+        if (err) {
+            res.send('Error');
+        }else {
+            res.send('success');
+        }
+    });
+    console.log(await User.findOne({email: user_email}));
+    res.redirect('/dashboard');
 });
 
 function ensureAuthenticated(req, res, next) {
