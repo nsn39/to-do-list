@@ -85,6 +85,30 @@ router.post('/add', async (req, res) => {
     
 });
 
+//Deleting an item from the list
+router.get('/delete', async (req, res) => {
+    var index = req.query.index;
+    //console.log(index);
+    const user = await User.findOne({email: user_email});
+    const to_be_deleted = user.tasks[index];
+    const filter = {email: user_email};
+    const update = {$pull: {tasks: to_be_deleted }};
+    const option = { safe: true, multi: true };
+
+    await User.updateOne(filter, update, option, async (err, result) => {
+        if (err) {
+            res.send(err);
+        }else {
+            const savedUser = await User.findOne({email: user_email});
+            console.log(savedUser);
+            console.log('reached herer');
+            res.render('dashboard', {
+                user: savedUser,
+            });
+        }
+    });
+});
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
